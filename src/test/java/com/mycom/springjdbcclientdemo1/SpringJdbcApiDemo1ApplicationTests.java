@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1;
+package com.mycom.springjdbcclientdemo1;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
