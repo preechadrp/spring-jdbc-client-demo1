@@ -1,0 +1,62 @@
+### นำไปรันใน vscode restclient
+###
+get http://localhost:8080/hello1
+
+###
+POST http://localhost:8080/hello2
+
+###
+get http://localhost:8080/user
+
+###
+POST http://localhost:8080/user
+content-type: application/json;charset=UTF-8
+
+{
+  "userName": "postก",
+  "email": "Joe@email.com",
+  "password": "12345679"
+}
+###
+POST http://localhost:8080/user-jsonnode
+content-type: application/json;charset=UTF-8
+
+{
+  "userName": "postกss",
+  "email": "Joe@email.com",
+  "password": "12345679",
+  "test": "mylast"
+}
+
+### test exception
+get http://localhost:8080/custom-exception
+
+### ===== custorder
+get http://localhost:8080/custorder
+
+###
+get http://localhost:8080/custorder/id/2011
+
+###
+get http://localhost:8080/custorder/customer_name2012
+
+###
+post http://localhost:8080/find-by-customer-name
+content-type: application/json;charset=UTF-8
+
+{
+  "customerName": "customer_name2012"
+}
+
+### insert new order
+post http://localhost:8080/custorder
+content-type: application/json;charset=UTF-8
+
+{
+  "orderId": 40,
+  "customerName": "Customer40",
+  "totalAmount": 4500.00,
+  "orderDate": "2026-09-05",
+  "insertDatetime": "2026-09-05T19:41:30.085+07:00"
+}
+

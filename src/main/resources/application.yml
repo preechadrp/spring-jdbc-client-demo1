@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-jdbc-client-demo1
+
+  # เติมเพื่อปิดการทำงานของ web server
+  # main:
+  #   web-application-type: none
+
+  profiles:
+    active: dev
+
+  threads:
+    virtual:
+      enabled: true

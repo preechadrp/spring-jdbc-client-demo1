@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/springjdbcapidemo1
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: a1234
+    hikari:
+      maximum-pool-size: 3
+      minimum-idle: 2
+      connection-timeout: 30000
+      auto-commit: true
+
+  # ให้ Spring Boot รัน script ใน src/main/resources/
+  # schema.sql -> data.sql ตามลำดับ
+  # sql:
+  #   init:
+  #     mode: always
+
+# extra config
+app-config:
+  # proxy settings
+  main:
+    name: test Name
+    proxy-host: proxy.example.com
+    proxy-port: 8080
+    proxy-username: proxyuser
+    proxy-password: proxypass
+  db:
+    db1-url: jdbc:mysql://localhost:3306/db1
+    db1-driver-class-name: org.mariadb.jdbc.Driver
+    db1-username: user1
+    db1-password: password1
+  schedule:
+    cron-run3: "* * 0 * * MON,WED,FRI"
