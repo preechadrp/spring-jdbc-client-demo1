@@ -16,13 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @EnableScheduling
 @SpringBootApplication
-public class SpringJdbcApiDemo1Application {
+public class SpringJdbcClientDemo1Application {
 
 	public static void main(String[] args) {
 		// Instant <-> DATETIME ใช้ timezone ของ JVM ในการแปลง จึงล็อกเป็นเวลาไทยก่อน Spring start
 		// ไม่งั้นผลจะขึ้นกับเครื่องที่รัน (เช่น server/docker ที่เป็น UTC จะเก็บเวลาช้าไป 7 ชั่วโมง)
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Bangkok"));
-		SpringApplication.run(SpringJdbcApiDemo1Application.class, args);
+		SpringApplication.run(SpringJdbcClientDemo1Application.class, args);
 	}
 
 	@Bean
