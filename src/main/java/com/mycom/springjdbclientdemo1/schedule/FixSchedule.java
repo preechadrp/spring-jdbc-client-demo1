@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.schedule;
+package com.mycom.springjdbclientdemo1.schedule;
 
 import java.util.concurrent.TimeUnit;
 

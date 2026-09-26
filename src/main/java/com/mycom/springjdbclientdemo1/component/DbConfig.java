@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.component;
+package com.mycom.springjdbclientdemo1.component;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.DependsOn;

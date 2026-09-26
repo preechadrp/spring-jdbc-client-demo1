@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.model;
+package com.mycom.springjdbclientdemo1.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

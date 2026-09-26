@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.repository;
+package com.mycom.springjdbclientdemo1.repository;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import com.mycom.springjdbcapidemo1.model.CustOrder;
+import com.mycom.springjdbclientdemo1.model.CustOrder;
 
 /**
  * ตัวอย่างการใช้ JdbcClient (Spring 6.1+ / Spring Boot 3.2+) แทน JdbcTemplate

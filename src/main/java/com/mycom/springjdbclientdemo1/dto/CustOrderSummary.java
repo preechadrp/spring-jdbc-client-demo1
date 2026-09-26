@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.dto;
+package com.mycom.springjdbclientdemo1.dto;
 
 import java.math.BigDecimal;
 

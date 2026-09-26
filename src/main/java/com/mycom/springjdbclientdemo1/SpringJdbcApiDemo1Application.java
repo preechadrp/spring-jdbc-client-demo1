@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1;
+package com.mycom.springjdbclientdemo1;
 
 import java.util.TimeZone;
 
@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.mycom.springjdbcapidemo1.model.CustOrder;
-import com.mycom.springjdbcapidemo1.repository.CustOrderRepository;
+import com.mycom.springjdbclientdemo1.model.CustOrder;
+import com.mycom.springjdbclientdemo1.repository.CustOrderRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

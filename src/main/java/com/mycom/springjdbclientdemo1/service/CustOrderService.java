@@ -1,10 +1,10 @@
-package com.mycom.springjdbcapidemo1.service;
+package com.mycom.springjdbclientdemo1.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mycom.springjdbcapidemo1.model.CustOrder;
-import com.mycom.springjdbcapidemo1.repository.CustOrderRepository;
+import com.mycom.springjdbclientdemo1.model.CustOrder;
+import com.mycom.springjdbclientdemo1.repository.CustOrderRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

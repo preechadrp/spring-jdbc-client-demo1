@@ -1,4 +1,4 @@
-package com.mycom.springjdbcapidemo1.controller;
+package com.mycom.springjdbclientdemo1.controller;
 
 import java.util.List;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.springjdbcapidemo1.dto.CustomerNameDto;
-import com.mycom.springjdbcapidemo1.exception.CustomException;
-import com.mycom.springjdbcapidemo1.exception.ErrorCode;
-import com.mycom.springjdbcapidemo1.model.CustOrder;
-import com.mycom.springjdbcapidemo1.repository.CustOrderRepository;
+import com.mycom.springjdbclientdemo1.dto.CustomerNameDto;
+import com.mycom.springjdbclientdemo1.exception.CustomException;
+import com.mycom.springjdbclientdemo1.exception.ErrorCode;
+import com.mycom.springjdbclientdemo1.model.CustOrder;
+import com.mycom.springjdbclientdemo1.repository.CustOrderRepository;
 
 @RestController
 public class CustOrderController {
