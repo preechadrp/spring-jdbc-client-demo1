@@ -28,6 +28,7 @@ public class SpringJdbcClientDemo1Application {
 
 	@Bean
 	CommandLineRunner custOrder(CustOrderRepository custOrderRepository) {
+		//ตัวอย่างการใช้ CommandLineRunner นี้สามารถนำไปประยุกต์สร้างโปรแกรมแบบ batch/command-line application ที่รันและจบในครั้งเดียว
 		return (args) -> {
 			log.info("Running CommandLineRunner.....test");
 			var datas = custOrderRepository.findByCustomerName("customer_name" + 2011);
