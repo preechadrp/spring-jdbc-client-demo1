@@ -54,7 +54,9 @@ public class CustOrderRepository {
 
 		// .paramSource(custorder) ดึงค่าจาก getter ที่ชื่อตรงกับ :parameter ให้อัตโนมัติ
 		// เช่น :orderId -> getOrderId() เขียนสั้นลงแต่ต้องตั้งชื่อ parameter ให้ตรงกับ field
-		// หมายเหตุ: insertDatetime จะถูกส่งเป็น Instant ตรงๆ (ไม่ผ่าน toTimestamp) ไดรเวอร์ MariaDB 3.x รองรับ
+		// หมายเหตุ: insertDatetime ถูกส่งเป็น Instant ตรงๆ (setObject) ได้เพราะไดรเวอร์ MariaDB 3.x รองรับ
+		// คอลัมน์ต้องเป็น DATETIME(6) จึงจะเก็บเศษวินาทีได้ครบ (DATETIME เฉยๆ จะตัดทิ้ง)
+		// DATETIME ไม่เก็บ timezone ไดรเวอร์จึงแปลงตาม connectionTimeZone=Asia/Bangkok ที่ตั้งไว้ใน datasource url
 		jdbcClient.sql(sql)
 				.paramSource(custorder)
 				.update();

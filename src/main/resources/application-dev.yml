@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/springjdbcapidemo1
+    # connectionTimeZone: ให้ไดรเวอร์แปลง Instant <-> DATETIME เป็นเวลาไทยเสมอ ไม่ขึ้นกับ timezone ของ JVM
+    url: jdbc:mariadb://localhost:3306/springjdbcapidemo1?connectionTimeZone=Asia/Bangkok
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: a1234
