@@ -31,6 +31,9 @@ content-type: application/json;charset=UTF-8
 ### test exception
 get http://localhost:8080/custom-exception
 
+### test external-api-error
+get http://localhost:8080/external-api-error
+
 ### ===== custorder
 get http://localhost:8080/custorder
 
