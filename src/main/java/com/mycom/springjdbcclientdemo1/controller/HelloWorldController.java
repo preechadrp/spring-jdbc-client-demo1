@@ -73,8 +73,9 @@ public class HelloWorldController {
 				ErrorCode.EXTERNAL_API_REJECTED,
 				"payment-service",
 				422,
-				"PAY-001",
-				"payment service rejected the request",
+				"EXT-005",
+				"user ยกเลิกการกรอก OTP",
+				true,
 				new IllegalStateException("demo upstream error"));
 	}
 

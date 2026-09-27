@@ -34,6 +34,18 @@ public class GlobalExceptionHandler {
 	// ดักจับ error จาก API ภายนอกโดยเฉพาะ ต้องประกาศก่อน CustomException
 	@ExceptionHandler(ExternalApiException.class)
 	public ResponseEntity<ErrorResponseDto> handleExternalApiException(ExternalApiException ex) {
+		if (ex.isExposeExternalError()) {
+			// ใช้เฉพาะ business error ที่ผ่านการอนุญาตให้ส่งต่อแล้ว
+			log.warn("[external-business-error] provider={} upstreamStatus={} externalCode={} externalMessage={}",
+					ex.getProvider(), ex.getUpstreamStatus(),
+					ex.getExternalErrorCode(), ex.getExternalErrorMessage());
+
+			return ResponseEntity.status(ex.getUpstreamStatus())
+					.body(new ErrorResponseDto(
+							ex.getExternalErrorCode(),
+							ex.getExternalErrorMessage()));
+		}
+
 		log.error("[{}] provider={} upstreamStatus={} externalCode={} externalMessage={}",
 				ex.getErrorCode(), ex.getProvider(), ex.getUpstreamStatus(),
 				ex.getExternalErrorCode(), ex.getExternalErrorMessage(), ex);
