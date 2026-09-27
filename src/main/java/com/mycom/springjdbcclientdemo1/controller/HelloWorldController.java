@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mycom.springjdbcclientdemo1.dto.UserDto;
 import com.mycom.springjdbcclientdemo1.exception.CustomException;
 import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
+import com.mycom.springjdbcclientdemo1.exception.ExternalApiException;
 import com.mycom.springjdbcclientdemo1.service.HelloWorldService;
 
 import jakarta.validation.Valid;
@@ -60,6 +61,21 @@ public class HelloWorldController {
 			throw new CustomException(ErrorCode.NAME_NOT_ALLOWED, "abc is not allowed");
 		}
 		return "custom-exception";
+	}
+
+	/**
+	 * ตัวอย่างจำลองกรณี external API ตอบ error
+	 * ในงานจริงให้ throw จุดนี้จาก service หลังอ่าน errorCode/errorMessage ของระบบปลายทางแล้ว
+	 */
+	@GetMapping("/external-api-error")
+	public String testExternalApiException() {
+		throw new ExternalApiException(
+				ErrorCode.EXTERNAL_API_REJECTED,
+				"payment-service",
+				422,
+				"PAY-001",
+				"payment service rejected the request",
+				new IllegalStateException("demo upstream error"));
 	}
 
 }

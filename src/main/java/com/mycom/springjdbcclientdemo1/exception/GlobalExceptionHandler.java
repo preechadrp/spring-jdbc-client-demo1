@@ -2,6 +2,7 @@ package com.mycom.springjdbcclientdemo1.exception;
 
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,27 @@ public class GlobalExceptionHandler {
 	 * เช่น {"errorCode":"ORD-001","errorMessage":"ไม่พบ order id 99"}
 	 * (HTTP status อยู่ใน status line ของ response แล้ว จึงไม่ใส่ซ้ำใน body)
 	 */
-	private record ErrorResponseDto(String errorCode, String errorMessage) {
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private record ErrorResponseDto(String errorCode, String errorMessage, String externalErrorCode) {
+
+		private ErrorResponseDto(String errorCode, String errorMessage) {
+			this(errorCode, errorMessage, null);
+		}
 	};
+
+	// ดักจับ error จาก API ภายนอกโดยเฉพาะ ต้องประกาศก่อน CustomException
+	@ExceptionHandler(ExternalApiException.class)
+	public ResponseEntity<ErrorResponseDto> handleExternalApiException(ExternalApiException ex) {
+		log.error("[{}] provider={} upstreamStatus={} externalCode={} externalMessage={}",
+				ex.getErrorCode(), ex.getProvider(), ex.getUpstreamStatus(),
+				ex.getExternalErrorCode(), ex.getExternalErrorMessage(), ex);
+
+		return ResponseEntity.status(ex.getHttpStatusCode())
+				.body(new ErrorResponseDto(
+						ex.getErrorCode(),
+						ex.getMessage(),
+						ex.getExternalErrorCode()));
+	}
 
 	// ดักจับ CustomException ที่เราสร้างเอง
 	@ExceptionHandler(CustomException.class)

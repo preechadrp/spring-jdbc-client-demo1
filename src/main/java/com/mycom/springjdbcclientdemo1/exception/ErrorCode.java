@@ -23,6 +23,10 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 
+	// ---- external API ----
+	EXTERNAL_API_REJECTED(HttpStatus.BAD_GATEWAY, "EXT-001", "บริการภายนอกปฏิเสธคำขอ"),
+	EXTERNAL_API_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE, "EXT-002", "บริการภายนอกไม่พร้อมใช้งาน"),
+
 	// ---- ทั่วไป (COM) ----
 	VALIDATION_FAILED(HttpStatus.BAD_REQUEST, "COM-001", "ข้อมูลที่ส่งมาไม่ถูกต้อง"),
 	REQUEST_REJECTED(HttpStatus.BAD_REQUEST, "COM-002", "คำขอไม่ถูกต้อง"),
