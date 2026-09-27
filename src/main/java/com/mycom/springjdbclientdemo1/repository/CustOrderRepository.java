@@ -11,7 +11,6 @@ import java.util.Optional;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -45,29 +44,14 @@ public class CustOrderRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	// RowMapper ใช้ได้เหมือนเดิมทุกอย่าง
-	// insert_datetime (DATETIME) อ่านเป็น Timestamp แล้วแปลงเป็น Instant ด้วย timezone ของ JVM
-	private final RowMapper<CustOrder> rowMapper = (rs, rowNum) -> {
-		return new CustOrder()
-				.setOrderId(rs.getInt("order_id"))
-				.setCustomerName(rs.getString("customer_name"))
-				.setTotalAmount(rs.getBigDecimal("total_amount"))
-				.setOrderDate(rs.getObject("order_date", LocalDate.class))
-				.setInsertDatetime(toInstant(rs.getTimestamp("insert_datetime")));
-	};
-
 	/*
-	 * แปลง Instant <-> Timestamp สำหรับคอลัมน์ DATETIME
+	 * แปลง Instant เป็น Timestamp สำหรับคอลัมน์ DATETIME
 	 * DATETIME ไม่เก็บ timezone ไดรเวอร์จึงใช้ timezone ของ JVM (Asia/Bangkok ตั้งใน main)
 	 * แปลงไป-กลับ ค่าที่เห็นใน DB จึงเป็นเวลาไทย
 	 * ใช้ Timestamp แทนการส่ง Instant ตรงๆ เพื่อไม่ขึ้นกับว่าไดรเวอร์รองรับ Instant หรือไม่
 	 */
 	private static Timestamp toTimestamp(Instant instant) {
 		return instant == null ? null : Timestamp.from(instant);
-	}
-
-	private static Instant toInstant(Timestamp timestamp) {
-		return timestamp == null ? null : timestamp.toInstant();
 	}
 
 	public void insert(CustOrder custorder) {
@@ -93,7 +77,7 @@ public class CustOrderRepository {
 	public List<CustOrder> findAll() {
 		String sql = "SELECT * FROM cust_order ORDER BY order_id";
 		return jdbcClient.sql(sql)
-				.query(rowMapper)
+				.query(CustOrder.class)
 				.list(); // หลายแถว -> List (ไม่พบ = list ว่าง)
 	}
 
@@ -105,7 +89,7 @@ public class CustOrderRepository {
 		String sql = "SELECT * FROM cust_order WHERE order_id = :orderId";
 		return jdbcClient.sql(sql)
 				.param("orderId", orderId)
-				.query(rowMapper)
+				.query(CustOrder.class)
 				.optional(); // 0 แถว -> Optional.empty(), 1 แถว -> Optional.of(...)
 	}
 
@@ -113,7 +97,7 @@ public class CustOrderRepository {
 		String sql = "SELECT * FROM cust_order WHERE customer_name = :customerName ORDER BY order_id";
 		return jdbcClient.sql(sql)
 				.param("customerName", customerName)
-				.query(rowMapper)
+				.query(CustOrder.class)
 				.list();
 	}
 
