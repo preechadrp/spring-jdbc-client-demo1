@@ -1,4 +1,4 @@
-package com.mycom.springjdbclientdemo1.repository;
+package com.mycom.springjdbcclientdemo1.repository;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import com.mycom.springjdbclientdemo1.model.CustOrder;
+import com.mycom.springjdbcclientdemo1.model.CustOrder;
 
 /**
  * ตัวอย่างการใช้ JdbcClient (Spring 6.1+ / Spring Boot 3.2+) แทน JdbcTemplate
@@ -44,16 +44,6 @@ public class CustOrderRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	/*
-	 * แปลง Instant เป็น Timestamp สำหรับคอลัมน์ DATETIME
-	 * DATETIME ไม่เก็บ timezone ไดรเวอร์จึงใช้ timezone ของ JVM (Asia/Bangkok ตั้งใน main)
-	 * แปลงไป-กลับ ค่าที่เห็นใน DB จึงเป็นเวลาไทย
-	 * ใช้ Timestamp แทนการส่ง Instant ตรงๆ เพื่อไม่ขึ้นกับว่าไดรเวอร์รองรับ Instant หรือไม่
-	 */
-	private static Timestamp toTimestamp(Instant instant) {
-		return instant == null ? null : Timestamp.from(instant);
-	}
-
 	public void insert(CustOrder custorder) {
 
 		String sql = """
@@ -62,16 +52,12 @@ public class CustOrderRepository {
 				VALUES (:orderId, :customerName, :totalAmount, :orderDate, :insertDatetime)
 				""";
 
-		jdbcClient.sql(sql)
-				.param("orderId", custorder.getOrderId())
-				.param("customerName", custorder.getCustomerName())
-				.param("totalAmount", custorder.getTotalAmount())
-				.param("orderDate", custorder.getOrderDate())
-				.param("insertDatetime", toTimestamp(custorder.getInsertDatetime()))
-				.update();
-
-		// ทางเลือก: .paramSource(custorder) จะดึงค่าจาก getter ที่ชื่อตรงกับ :parameter ให้อัตโนมัติ
+		// .paramSource(custorder) ดึงค่าจาก getter ที่ชื่อตรงกับ :parameter ให้อัตโนมัติ
 		// เช่น :orderId -> getOrderId() เขียนสั้นลงแต่ต้องตั้งชื่อ parameter ให้ตรงกับ field
+		// หมายเหตุ: insertDatetime จะถูกส่งเป็น Instant ตรงๆ (ไม่ผ่าน toTimestamp) ไดรเวอร์ MariaDB 3.x รองรับ
+		jdbcClient.sql(sql)
+				.paramSource(custorder)
+				.update();
 	}
 
 	public List<CustOrder> findAll() {
@@ -112,13 +98,9 @@ public class CustOrderRepository {
 				WHERE order_id = :orderId
 				""";
 
-		// ใช้ชื่อ parameter จึงใส่ .param() ลำดับไหนก็ได้ (JdbcTemplate ต้องเรียงตาม ? เป๊ะ)
+		// .paramSource(custorder) ดึงค่าจาก getter ตามชื่อ :parameter (เหมือน insert)
 		return jdbcClient.sql(sql)
-				.param("orderId", custorder.getOrderId())
-				.param("customerName", custorder.getCustomerName())
-				.param("totalAmount", custorder.getTotalAmount())
-				.param("orderDate", custorder.getOrderDate())
-				.param("insertDatetime", toTimestamp(custorder.getInsertDatetime()))
+				.paramSource(custorder)
 				.update(); // คืนจำนวนแถวที่ถูกแก้ไข
 	}
 

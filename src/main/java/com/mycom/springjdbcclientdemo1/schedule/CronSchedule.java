@@ -1,4 +1,4 @@
-package com.mycom.springjdbclientdemo1.schedule;
+package com.mycom.springjdbcclientdemo1.schedule;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

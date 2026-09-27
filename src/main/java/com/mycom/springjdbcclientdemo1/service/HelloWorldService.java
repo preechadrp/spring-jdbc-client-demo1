@@ -1,11 +1,11 @@
-package com.mycom.springjdbclientdemo1.service;
+package com.mycom.springjdbcclientdemo1.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.mycom.springjdbclientdemo1.component.AppConfig;
-import com.mycom.springjdbclientdemo1.exception.CustomException;
-import com.mycom.springjdbclientdemo1.exception.ErrorCode;
+import com.mycom.springjdbcclientdemo1.component.AppConfig;
+import com.mycom.springjdbcclientdemo1.exception.CustomException;
+import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
 
 import lombok.extern.slf4j.Slf4j;
 

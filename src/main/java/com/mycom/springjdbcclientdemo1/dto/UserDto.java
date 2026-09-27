@@ -1,4 +1,4 @@
-package com.mycom.springjdbclientdemo1.dto;
+package com.mycom.springjdbcclientdemo1.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

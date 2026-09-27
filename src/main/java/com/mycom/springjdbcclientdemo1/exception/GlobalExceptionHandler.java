@@ -1,4 +1,4 @@
-package com.mycom.springjdbclientdemo1.exception;
+package com.mycom.springjdbcclientdemo1.exception;
 
 import java.util.stream.Collectors;
 

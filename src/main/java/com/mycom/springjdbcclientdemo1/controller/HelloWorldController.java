@@ -1,14 +1,14 @@
-package com.mycom.springjdbclientdemo1.controller;
+package com.mycom.springjdbcclientdemo1.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.springjdbclientdemo1.dto.UserDto;
-import com.mycom.springjdbclientdemo1.exception.CustomException;
-import com.mycom.springjdbclientdemo1.exception.ErrorCode;
-import com.mycom.springjdbclientdemo1.service.HelloWorldService;
+import com.mycom.springjdbcclientdemo1.dto.UserDto;
+import com.mycom.springjdbcclientdemo1.exception.CustomException;
+import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
+import com.mycom.springjdbcclientdemo1.service.HelloWorldService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

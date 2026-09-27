@@ -1,4 +1,4 @@
-package com.mycom.springjdbclientdemo1.component;
+package com.mycom.springjdbcclientdemo1.component;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
