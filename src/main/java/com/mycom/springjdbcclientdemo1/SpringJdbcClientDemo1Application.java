@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.mycom.springjdbcclientdemo1.config.AppTimeZone;
 import com.mycom.springjdbcclientdemo1.model.CustOrder;
 import com.mycom.springjdbcclientdemo1.repository.CustOrderRepository;
 
@@ -22,7 +23,8 @@ public class SpringJdbcClientDemo1Application {
 		// ล็อก timezone ของ JVM เป็นเวลาไทยก่อน Spring start มีผลกับ LocalDate.now(), LocalDateTime.now() และเวลาใน log
 		// ไม่งั้นผลจะขึ้นกับเครื่องที่รัน (เช่น server/docker ที่เป็น UTC ช่วง 00:00-07:00 น. LocalDate.now() จะได้วันของเมื่อวาน)
 		// ส่วนการแปลง Instant <-> DATETIME ใน DB ใช้ connectionTimeZone ใน datasource url ก่อน ค่านี้เป็นแค่ค่าสำรอง
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Bangkok"));
+		// กำหนด default timezone ของ JVM เป็น Asia/Bangkok ก่อน Spring เริ่มทำงาน
+		TimeZone.setDefault(TimeZone.getTimeZone(AppTimeZone.ZONE_ID));
 		SpringApplication.run(SpringJdbcClientDemo1Application.class, args);
 	}
 

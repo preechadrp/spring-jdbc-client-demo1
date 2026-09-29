@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mycom.springjdbcclientdemo1.config.AppTimeZone;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public class CustOrder {
 	 * JSON ต้องมี offset เสมอ เช่น 2026-09-05T19:41:30.085+07:00 (ส่งเข้าหรือแสดงผล)
 	 * timezone = "Asia/Bangkok" ทำให้แสดงผลเป็นเวลาไทย
 	 */
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "Asia/Bangkok")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = AppTimeZone.ZONE_ID_STR)
 	private Instant insertDatetime;
 
 }

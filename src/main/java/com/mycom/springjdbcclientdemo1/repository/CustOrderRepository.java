@@ -1,19 +1,16 @@
 package com.mycom.springjdbcclientdemo1.repository;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.mycom.springjdbcclientdemo1.config.AppTimeZone;
 import com.mycom.springjdbcclientdemo1.model.CustOrder;
 
 /**
@@ -37,14 +34,12 @@ import com.mycom.springjdbcclientdemo1.model.CustOrder;
 public class CustOrderRepository {
 
 	private final JdbcClient jdbcClient;
-	private final JdbcTemplate jdbcTemplate; // ใช้เฉพาะงาน batch
 
-	public CustOrderRepository(JdbcClient jdbcClient, JdbcTemplate jdbcTemplate) {
+	public CustOrderRepository(JdbcClient jdbcClient) {
 		this.jdbcClient = jdbcClient;
-		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public void insert(CustOrder custorder) {
+	public int insert(CustOrder custorder) {
 
 		String sql = """
 				INSERT INTO cust_order
@@ -57,7 +52,7 @@ public class CustOrderRepository {
 		// หมายเหตุ: insertDatetime ถูกส่งเป็น Instant ตรงๆ (setObject) ได้เพราะไดรเวอร์ MariaDB 3.x รองรับ
 		// คอลัมน์ต้องเป็น DATETIME(6) จึงจะเก็บเศษวินาทีได้ครบ (DATETIME เฉยๆ จะตัดทิ้ง)
 		// DATETIME ไม่เก็บ timezone ไดรเวอร์จึงแปลงตาม connectionTimeZone=Asia/Bangkok ที่ตั้งไว้ใน datasource url
-		jdbcClient.sql(sql)
+		return jdbcClient.sql(sql)
 				.paramSource(custorder)
 				.update();
 	}
@@ -113,36 +108,26 @@ public class CustOrderRepository {
 				.update();
 	}
 
-	public void insertUsersByBatch() {
-		//=== ตัวอย่างการ insert แบบ batch (JdbcClient ยังไม่รองรับ จึงใช้ JdbcTemplate)
-		String sql = """
-				INSERT INTO cust_order
-				(order_id, customer_name, total_amount, order_date, insert_datetime)
-				VALUES (?,?,?,?,?)
-				""";
-
-		jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-
-			int start = 2011;
-
-			@Override
-			public void setValues(PreparedStatement ps, int i) throws SQLException {
-
-				int idx = start + i;
-
-				ps.setInt(1, idx); //order_id
-				ps.setString(2, "customer_name" + idx); //customer_name
-				ps.setBigDecimal(3, new BigDecimal(idx + "00")); //total_amount
-				ps.setDate(4, java.sql.Date.valueOf(LocalDate.now())); //order_date (แก้จาก index 3 ที่ซ้ำ)
-				ps.setTimestamp(5, Timestamp.from(Instant.now())); //insert_datetime (แก้จาก 4)
-			}
-
-			@Override
-			public int getBatchSize() {
-				return 10;
-			}
-
-		});
+	/**
+	 * ตัวอย่าง insert หลายรายการ
+	 * JdbcClient ไม่มี batchUpdate โดยตรง จึงวน insert ภายใน transaction เดียวกัน
+	 * (ทั้งหมดสำเร็จ หรือ rollback ทั้งหมด)
+	 */
+	@Transactional
+	public int insertOrdersByBatch(int start, int size) {
+		Instant now = Instant.now();
+		LocalDate today = LocalDate.now(AppTimeZone.ZONE_ID);
+		int total = 0;
+		for (int i = 0; i < size; i++) {
+			int idx = start + i;
+			total += insert(new CustOrder()
+					.setOrderId(idx)
+					.setCustomerName("customer_name" + idx)
+					.setTotalAmount(new BigDecimal(idx + "00"))
+					.setOrderDate(today)
+					.setInsertDatetime(now));
+		}
+		return total;
 	}
 
 }
