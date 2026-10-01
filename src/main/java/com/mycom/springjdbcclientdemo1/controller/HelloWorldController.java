@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.springjdbcclientdemo1.dto.UserDto;
+import com.mycom.springjdbcclientdemo1.dto.UserRequest;
 import com.mycom.springjdbcclientdemo1.exception.CustomException;
 import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
 import com.mycom.springjdbcclientdemo1.exception.ExternalApiException;
@@ -37,12 +37,12 @@ public class HelloWorldController {
 	}
 
 	@GetMapping("/user")
-	public UserDto getUser() {
-		return new UserDto("นายใจดี", "Joe@email.com", "1234");
+	public UserRequest getUser() {
+		return new UserRequest("นายใจดี", "Joe@email.com", "1234");
 	}
 
 	@PostMapping("/user")
-	public UserDto postUser(@RequestBody @Valid UserDto userDto) {
+	public UserRequest postUser(@RequestBody @Valid UserRequest userDto) {
 		return userDto;
 	}
 

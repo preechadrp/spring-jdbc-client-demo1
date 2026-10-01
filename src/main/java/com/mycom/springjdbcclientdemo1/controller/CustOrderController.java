@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mycom.springjdbcclientdemo1.dto.CustomerNameDto;
+import com.mycom.springjdbcclientdemo1.dto.CustomerNameRequest;
 import com.mycom.springjdbcclientdemo1.exception.CustomException;
 import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
 import com.mycom.springjdbcclientdemo1.model.CustOrder;
@@ -44,7 +44,7 @@ public class CustOrderController {
 	}
 
 	@PostMapping("/custorder-find-by-customer-name")
-	public List<CustOrder> getCustOrderByCustomerNameByPost(@RequestBody CustomerNameDto customerNameDto) {
+	public List<CustOrder> getCustOrderByCustomerNameByPost(@RequestBody CustomerNameRequest customerNameDto) {
 		return custOrderRepository.findByCustomerName(customerNameDto.customerName());
 	}
 

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserDto {
+public class UserRequest {
 	@NotBlank(message = "กรุณากรอกชื่อผู้ใช้")
 	@Pattern(regexp = "^[a-zA-Z]+$", message = "ชื่อผู้ใช้ต้องเป็นภาษาอังกฤษ (a-z, A-Z) เท่านั้น")
 	private String userName;
