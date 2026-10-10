@@ -1,8 +1,8 @@
 package com.mycom.springjdbcclientdemo1;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.Instant;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -17,9 +17,12 @@ import com.mycom.springjdbcclientdemo1.repository.CustOrderRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+//useMainMethod = ALWAYS ให้ test start ผ่าน main() เพื่อให้ TimeZone.setDefault("Asia/Bangkok") ทำงานเหมือนตอนรันจริง
+//(ค่า default คือ NEVER = ไม่เรียก main() timezone จะขึ้นกับเครื่องที่รัน test)
+
 @Slf4j
-@SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SpringBootTest(useMainMethod = SpringBootTest.UseMainMethod.ALWAYS)
 public class CustOrderTest {
 
 	@Autowired

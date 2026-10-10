@@ -24,6 +24,7 @@ public class SpringJdbcClientDemo1Application {
 		// ไม่งั้นผลจะขึ้นกับเครื่องที่รัน (เช่น server/docker ที่เป็น UTC ช่วง 00:00-07:00 น. LocalDate.now() จะได้วันของเมื่อวาน)
 		// ส่วนการแปลง Instant <-> DATETIME ใน DB ใช้ connectionTimeZone ใน datasource url ก่อน ค่านี้เป็นแค่ค่าสำรอง
 		// กำหนด default timezone ของ JVM เป็น Asia/Bangkok ก่อน Spring เริ่มทำงาน
+		log.info("==setdefaulTimeZone==");
 		TimeZone.setDefault(TimeZone.getTimeZone(AppTimeZone.ZONE_ID));
 		SpringApplication.run(SpringJdbcClientDemo1Application.class, args);
 	}
