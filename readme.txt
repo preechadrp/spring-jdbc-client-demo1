@@ -3,7 +3,8 @@
   JdbcClient (Spring 6.1+): jdbcClient.sql(SQL).param("name", value).query(rowMapper).list()/optional()/single()
   - ใช้ชื่อ parameter (:orderId) แทน ?
   - findById คืน Optional แทนการ throw EmptyResultDataAccessException
-  - batch update ยังต้องใช้ JdbcTemplate
+  - JdbcClient ยังไม่มี batch update ตัวอย่าง insertOrdersByBatch() จึงวน insert ใน transaction เดียวกัน
+    (ถ้าต้องการ batch จริงต้องใช้ JdbcTemplate.batchUpdate)
 
 - relax binding  (การ map ชื่อระหว่าง java กับ config/environment varible/database table field)
 
@@ -78,7 +79,7 @@ Controller,RestController   //HTTP
    ↓
 Service (@Transactional)    //business logic ควรใช้ @Transactional(rollbackFor = Exception.class) เพื่อให้ rollbak ทุกกรณี
    ↓
-Repository (JdbcTemplate)   //database access
+Repository (JdbcClient)     //database access
    ↓
 DataSource (แต่ในตัวอย่างนี้ใช้ HikariDataSource โดยตรง)
    ↓

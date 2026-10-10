@@ -32,4 +32,4 @@ app-config:
     db1-username: user1
     db1-password: password1
   schedule:
-    cron-run3: "* * 0 * * MON,WED,FRI"
+    cron-run3: "0 0 0 * * MON,WED,FRI"

@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
 		}
 	};
 
-	// ดักจับ error จาก API ภายนอกโดยเฉพาะ ต้องประกาศก่อน CustomException
+	// ดักจับ error จาก API ภายนอกโดยเฉพาะ (Spring เลือก handler ที่ type ตรงที่สุด ไม่ขึ้นกับลำดับการประกาศ)
 	@ExceptionHandler(ExternalApiException.class)
 	public ResponseEntity<ErrorResponseDto> handleExternalApiException(ExternalApiException ex) {
 		if (ex.isExposeExternalError()) {

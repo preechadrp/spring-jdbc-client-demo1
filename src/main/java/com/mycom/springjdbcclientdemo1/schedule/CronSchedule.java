@@ -19,7 +19,7 @@ public class CronSchedule {
 		}
 	}
 
-	@Scheduled(cron = "* * 0 * * MON-FRI")
+	@Scheduled(cron = "0 0 0 * * MON-FRI")
 	public void run2() {
 		try {
 			log.info("CronSchedule is running... at 0.00 every day between monday and friday");
@@ -29,8 +29,8 @@ public class CronSchedule {
 		}
 	}
 
-	@Scheduled(cron = "* * 0 * * MON,WED,FRI")
-	//@Scheduled(cron = "${app.schedule.cron-run3}")
+	@Scheduled(cron = "0 0 0 * * MON,WED,FRI")
+	//@Scheduled(cron = "${app-config.schedule.cron-run3}")
 	public void run3() {
 		try {
 			log.info("CronSchedule is running... at 0.00 at monday, wednesday, friday");

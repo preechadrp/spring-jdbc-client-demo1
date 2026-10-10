@@ -28,7 +28,8 @@ import com.mycom.springjdbcclientdemo1.model.CustOrder;
  *    EmptyResultDataAccessException)
  *  - ไม่ต้องสร้าง new Object[] { ... }
  *
- * ข้อจำกัด: JdbcClient ยังไม่มี batch update จึงยังใช้ JdbcTemplate ใน insertUsersByBatch()
+ * ข้อจำกัด: JdbcClient ยังไม่มี batch update ใน insertOrdersByBatch() จึงวน insert ทีละรายการ
+ * ภายใน transaction เดียวกัน (ถ้าต้องการ batch จริงต้องใช้ JdbcTemplate.batchUpdate)
  */
 @Repository
 public class CustOrderRepository {
