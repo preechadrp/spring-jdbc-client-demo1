@@ -9,7 +9,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@DependsOn("AppConfig") //บอกให้สร้าง AppConfig ก่อนสร้าง CommonConfig
+@DependsOn("appConfig") //บอกให้สร้าง AppConfig ก่อนสร้าง CommonConfig
 @Component
 @Data
 @ConfigurationProperties(prefix = "app-config.db")

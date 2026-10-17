@@ -7,7 +7,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-@Component("AppConfig")
+@Component("appConfig")
 @Getter
 @Slf4j
 public class AppConfig {
