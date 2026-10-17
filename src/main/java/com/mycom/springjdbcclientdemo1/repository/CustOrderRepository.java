@@ -59,6 +59,7 @@ public class CustOrderRepository {
 	}
 
 	public List<CustOrder> findAll() {
+		//หากฟิลด์ชื่อไม่เป็นแบบ snake case จะ map กันไม่พบ เช่นชื่อจริงคือ customerName ให้ select customerName as customer_name เป็นต้น
 		String sql = "SELECT * FROM cust_order ORDER BY order_id";
 		return jdbcClient.sql(sql)
 				.query(CustOrder.class)
