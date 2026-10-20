@@ -21,6 +21,10 @@ public class CustomException extends RuntimeException {
 		super(message, cause);
 		this.httpStatusCode = errorCode.getHttpStatus();
 		this.errorCode = errorCode.getCode();
-		this.printStackTrace = true;
+		if (cause != null) {
+			this.printStackTrace = true;
+		} else {
+			this.printStackTrace = false;
+		}
 	}
 }
