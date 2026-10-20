@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mycom.springjdbcclientdemo1.dto.UserRequest;
 import com.mycom.springjdbcclientdemo1.exception.CustomException;
 import com.mycom.springjdbcclientdemo1.exception.ErrorCode;
-import com.mycom.springjdbcclientdemo1.exception.ExternalApiException;
 import com.mycom.springjdbcclientdemo1.service.HelloWorldService;
 
 import jakarta.validation.Valid;
@@ -56,27 +55,9 @@ public class HelloWorldController {
 	public String testCustomException() {
 		String name = "Joe";
 		if (!"abc".equals(name)) {
-			//throw new CustomException(ErrorCode.NAME_NOT_ALLOWED); // ใช้ข้อความเริ่มต้นใน ErrorCode
-			//throw new CustomException(ErrorCode.NAME_NOT_ALLOWED, "abc is not allowed", true); // พิมพ์ stack trace ใน log
 			throw new CustomException(ErrorCode.NAME_NOT_ALLOWED, "abc is not allowed");
 		}
 		return "custom-exception";
-	}
-
-	/**
-	 * ตัวอย่างจำลองกรณี external API ตอบ error
-	 * ในงานจริงให้ throw จุดนี้จาก service หลังอ่าน errorCode/errorMessage ของระบบปลายทางแล้ว
-	 */
-	@GetMapping("/external-api-error")
-	public String testExternalApiException() {
-		throw new ExternalApiException(
-				ErrorCode.EXTERNAL_API_REJECTED,
-				"payment-service",
-				422,
-				"EXT-005",
-				"user ยกเลิกการกรอก OTP",
-				true,
-				new IllegalStateException("demo upstream error"));
 	}
 
 }
