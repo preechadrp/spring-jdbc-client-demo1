@@ -86,6 +86,21 @@ public class CustOrderRepository {
 				.list();
 	}
 
+	/**
+	 * ดึงค่าคอลัมน์เดียว: query(String.class) ใช้ค่าคอลัมน์แรกของแต่ละแถว (SingleColumnRowMapper)
+	 * ต่างจาก query(CustOrder.class) ที่ map หลายคอลัมน์เข้า object
+	 *
+	 * @return customer_name หรือ null ถ้าไม่พบ order
+	 */
+	public String getCustName(int orderId) {
+		String sql = "SELECT customer_name FROM cust_order WHERE order_id = :orderId";
+		return jdbcClient.sql(sql)
+				.param("orderId", orderId)
+				.query(String.class)
+				.optional()     // 0 แถว -> Optional.empty() (ถ้าใช้ single() จะ throw EmptyResultDataAccessException)
+				.orElse(null);
+	}
+
 	public int update(CustOrder custorder) {
 
 		String sql = """
